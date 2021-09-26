@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<conio.h>
+typedef struct Node
+{
+	int info ;
+	struct Node *next;
+}node;
+void createsig(node**,int);
+void insertAtloc(node **,int,int,int);
+void display(node *);
+ 
+void main()
+{
+	int ch, item, pos,loc,i;
+	node *start ;
+	start = NULL;
+	clrscr();
+	printf("Enter number of node: ");
+	scanf("%d",&i);
+	createsig(&start,i);
+	printf("\nThe list is : ");
+	display(start);
+	printf("\nEnter the loc : ");
+	scanf("%d",&loc);
+	printf("\n\nEnter the item to be inserted at loc : ");
+	scanf("%d",&item);
+	insertAtloc(&start,item,loc,i);
+	printf("\nNow the list is : ");
+	display(start);
+	getch();
+}
+void createsig(node **start,int i)
+{       int item ,k=1;
+	while(i)
+	{ node *ptr,*last;
+	printf("\nEnter the info for node %d : ",k);
+	scanf("%d",&item);
+	ptr=(node*)malloc(sizeof(node));
+	ptr->info=item;
+	ptr->next=NULL;
+	if(*start==NULL)
+	{
+		*start = ptr ;
+	}
+	else
+	{	last = *start;
+		while(last->next != NULL)
+		{last=last->next;
+		}
+		last->next = ptr ;
+	}
+	i--;
+	k++;
+	}
+}
+void insertAtloc(node **start,int item , int i,int k )
+{
+	node *ptr,*loc,*last;
+	int n=1 ;
+	i=i-1;
+	ptr=(node*)malloc(sizeof(node));
+	ptr->info=item;
+	loc = *start ;
+	if(*start==NULL)
+	{
+		ptr->next = NULL ;
+	*start = ptr ;
+	}
+	else if(i<=k)
+	{   while(n != i)
+		{
+			loc=loc->next;
+			n++;
+		}
+		ptr->next = loc->next ;
+		loc->next = ptr ;
+ 
+ 
+ 
+	}
+	else
+	{	
+		last = *start;
+		while(last->next != NULL)
+		{last=last->next;
+		}
+		last->next = ptr ;
+	}
+}
+ 
+void display(node *start)
+{
+     while(start !=NULL)
+     { printf("\t %d",start->info);
+       start = start->next;
+     }
+}
